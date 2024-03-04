@@ -1,3 +1,12 @@
+__author__ = "Rebualefe Donald Motswiri"
+__copyright__ = "None"
+__credits__ = ["__author__"]
+__license__ = "None"
+__version__ = "0.0.1"
+__maintainer__ = "__author__"
+__email__ = "rmotswiri023@student.wethinkcode.co.za"
+__status__ = "incomplete but ok"
+
 import turtle
 
 
@@ -40,6 +49,7 @@ def heuristic_distance(point, goal):
 
     return h_score * 10
 
+
 def create_node(neighbor_value, g_score, current_node, target_node):
     global matrix
     h_score = heuristic_distance(neighbor_value, target_node)
@@ -52,20 +62,21 @@ def create_node(neighbor_value, g_score, current_node, target_node):
 
     return node
 
+
 def get_neighbour(matrix, bricks, closed_list, current_node, target_node):
     # current_node = 42, target_node = 46
-    
+
     # width: 10, height: 20
     matrix_row = len(matrix[0])
     matrix_column = len(matrix)
     row_index, col_index = find_indices(matrix, current_node)
-    
+
     # Declare indeces for all neighbours
     top_index = row_index - 1 if row_index > 0 else None
-    bottom_index = row_index + 1 if row_index < len(matrix) -1 else None
+    bottom_index = row_index + 1 if row_index < len(matrix) - 1 else None
 
     left_index = col_index - 1 if col_index > 0 else None
-    right_index = col_index + 1 if col_index < len(matrix[0]) -1 else None
+    right_index = col_index + 1 if col_index < len(matrix[0]) - 1 else None
 
     neighbours = []
     top_neigh = None
@@ -78,47 +89,55 @@ def get_neighbour(matrix, bricks, closed_list, current_node, target_node):
     bottom_left_neigh = None
     right_neigh = None
     left_neigh = None
-    
+
     # Index all neighbours
     if top_index is not None and col_index is not None:
         top_neigh = matrix[top_index][col_index]
         if top_neigh not in bricks and top_neigh not in closed_list:
-            neighbours.append(create_node(top_neigh, 10, current_node, target_node))
+            neighbours.append(create_node(
+                top_neigh, 10, current_node, target_node))
 
     if bottom_index is not None and col_index is not None:
         bottom_neigh = matrix[bottom_index][col_index]
         if bottom_neigh not in bricks and bottom_neigh not in closed_list:
-            neighbours.append(create_node(bottom_neigh, 10, current_node, target_node))
+            neighbours.append(create_node(
+                bottom_neigh, 10, current_node, target_node))
 
     if top_index is not None and right_index is not None:
         top_right_neigh = matrix[top_index][right_index]
         if top_right_neigh not in bricks and top_right_neigh not in closed_list:
-            neighbours.append(create_node(top_right_neigh, 14, current_node, target_node))
+            neighbours.append(create_node(
+                top_right_neigh, 14, current_node, target_node))
 
     if bottom_index is not None and right_index is not None:
         bottom_right_neigh = matrix[bottom_index][right_index]
         if bottom_right_neigh not in bricks and bottom_right_neigh not in closed_list:
-            neighbours.append(create_node(bottom_right_neigh, 14, current_node, target_node))
+            neighbours.append(create_node(bottom_right_neigh,
+                              14, current_node, target_node))
 
     if top_index is not None and left_index is not None:
         top_left_neigh = matrix[top_index][left_index]
         if top_left_neigh not in bricks and top_left_neigh not in closed_list:
-            neighbours.append(create_node(top_left_neigh, 14, current_node, target_node))
+            neighbours.append(create_node(
+                top_left_neigh, 14, current_node, target_node))
 
     if bottom_index is not None and left_index is not None:
         bottom_left_neigh = matrix[bottom_index][left_index]
         if bottom_left_neigh not in bricks and bottom_left_neigh not in closed_list:
-            neighbours.append(create_node(bottom_left_neigh, 14, current_node, target_node))
+            neighbours.append(create_node(bottom_left_neigh,
+                              14, current_node, target_node))
 
     if right_index is not None and row_index is not None:
         right_neigh = matrix[row_index][right_index]
         if right_neigh not in bricks and right_neigh not in closed_list:
-            neighbours.append(create_node(right_neigh, 10, current_node, target_node))
+            neighbours.append(create_node(
+                right_neigh, 10, current_node, target_node))
 
     if left_index is not None and row_index is not None:
         left_neigh = matrix[row_index][left_index]
         if left_neigh not in bricks and left_neigh not in closed_list:
-            neighbours.append(create_node(left_neigh, 10, current_node, target_node))
+            neighbours.append(create_node(
+                left_neigh, 10, current_node, target_node))
 
     neighbours = sorted(neighbours, key=lambda x: x['Node'])
 
@@ -137,7 +156,8 @@ def parse_node(number):
 
 
 def manhattan_distance(point1, point2):
-    x1, y1 = divmod(point1, 20)  # Assuming the maze is represented as a 10x10 grid
+    # Assuming the maze is represented as a 10x10 grid
+    x1, y1 = divmod(point1, 20)
     x2, y2 = divmod(point2, 10)
     s = abs(x2 - x1) + abs(y2 - y1)
     return s * 10
@@ -159,7 +179,8 @@ def are_diagonal(point1: int, point2: int) -> bool:
     Returns:
     - bool: True if the points are diagonal, False otherwise.
     """
-    x1, y1 = divmod(point1, 10)  # Assuming the maze is represented as a 10x10 grid
+    x1, y1 = divmod(
+        point1, 10)  # Assuming the maze is represented as a 10x10 grid
     x2, y2 = divmod(point2, 10)
 
     if abs(x2 - x1) != abs(y2 - y1):
@@ -169,7 +190,7 @@ def are_diagonal(point1: int, point2: int) -> bool:
 
 
 def draw_maze(x, y, square_size=20):
-    
+
     draw_filled_square(square_size, x, y)
 
 
@@ -177,7 +198,7 @@ def draw_maze(x, y, square_size=20):
 def init_turtle(coordinates_matrix, position_index):
     turtle_robot = turtle.Turtle()
     x, y = get_coordinates(position_index, coordinates_matrix)
-    
+
     turtle_robot.shape('turtle')
     turtle_robot.setheading(90)
     turtle_robot.penup()
@@ -208,9 +229,11 @@ def draw_constraint(width, height):
     constraint_turtle.hideturtle()
     constraint_turtle.penup()
     constraint_turtle.setheading(90)
-    constraint_turtle.forward(height-5)  # offset with -5 to accomodate the turtle
+    # offset with -5 to accomodate the turtle
+    constraint_turtle.forward(height-5)
     constraint_turtle.right(90)
-    constraint_turtle.forward(width-10)  # offset with +10 to accomodate the turtle
+    # offset with +10 to accomodate the turtle
+    constraint_turtle.forward(width-10)
     constraint_turtle.right(90)
     constraint_turtle.pendown()
     constraint_turtle.pencolor('red')
@@ -233,7 +256,7 @@ def draw_maze(coordinates_matrix, target_node, square_size):
 
             if counter == target_node:
                 draw_filled_square(square_size, x, y, color='blue')
-            
+
             counter += 1
 
 
@@ -245,9 +268,10 @@ def draw_filled_square(side_length, x, y, color=None):
     my_turtle.hideturtle()
 
     my_turtle.penup()  # Lift the pen to move without drawing
-    my_turtle.goto(x-10, y-5)  # offset by 10 and 5 to accomodate the turtle to be on the center of each block
+    # offset by 10 and 5 to accomodate the turtle to be on the center of each block
+    my_turtle.goto(x-10, y-5)
     my_turtle.pendown()  # Lower the pen to start drawing
- 
+
     my_turtle.fillcolor(color)  # Set the fill color
     my_turtle.pencolor('red')  # Set the pen color
     my_turtle.speed("fastest")  # Increase the drawing speed
@@ -327,15 +351,15 @@ def get_coordinates(position_index: int, coordinates_matrix: list) -> tuple:
 def get_lowest_f_score(neighbors):
     if not neighbors:
         return None
-    
+
     min_f_score = float('inf')
     min_f_node = None
-    
+
     for node in neighbors:
         if node['f'] < min_f_score:
             min_f_score = node['f']
             min_f_node = node
-    
+
     return min_f_node
 
 
@@ -350,6 +374,38 @@ def get_bricks(matrix: list, paths: list) -> list:
     return bricks
 
 
+def main_loop(turtle_robot):
+    while True:
+        robot_pos = turtle_robot.pos()
+        # print('robot_pos: ', robot_pos)
+        x = robot_pos[0]
+        y = robot_pos[1]
+
+        current_node = get_node_position((x, y), coordinates_matrix)
+        closed_list.append(current_node)
+
+        if current_node == target_node:
+            # print('Destination reached...')
+            break
+
+        neighbour = get_neighbour(
+            matrix, bricks, closed_list, current_node, target_node)
+
+        # print('neighbours of : ', current_node)
+        # for n in neighbour:
+        #     print(n)
+
+        # print('current location: ', current_node)
+
+        low_f_score = get_lowest_f_score(neighbour).get('Node', None)
+        # print('low_f_score: ', low_f_score)
+
+        get_pos = get_coordinates(low_f_score, coordinates_matrix)
+        turtle_robot.goto(get_pos[0], get_pos[1])
+
+    return robot_pos
+
+
 if __name__ == "__main__":
     screen = screen_turtle()
 
@@ -361,27 +417,24 @@ if __name__ == "__main__":
     draw_constraint(width, height)
 
     x_coord, y_coord = (-width, -200)
-    coordinates_matrix =  gen_matrix_tuple(width, height)
+    coordinates_matrix = gen_matrix_tuple(width, height)
     matrix = gen_matrix(10, 20)
-    
-    current_node = 19 # we started at node: 42
-    target_node = 90
+
+    current_node = 19  # we started at node: 42
+    target_node = 194
 
     open_list = []
-    closed_list = [current_node] # This list contains current node, and traversed node.
+    # This list contains current node, and traversed node.
+    closed_list = [current_node]
 
     turtle_robot = init_turtle(coordinates_matrix, current_node)
 
     # bricks = [0, 10, 20, 30, 40, 190, 34, 54, 1, 11, 19, 29, 9,
     #           44, 179, 189, 199, 188, 196, 197, 198]
-    
 
-    paths = [19, 18, 17, 27, 24, 25,26, 14,
-             13, 12, 11, 21, 31, 32, 42, 52,
-             53, 54, 44, 64, 74, 61, 62, 63, 65,
-             66, 67, 68, 46, 56, 57, 58, 48, 78, 88,
-             87, 86, 96, 95, 94, 93, 92, 91, 90]
-    
+    paths = [11, 12, 13, 14, 17, 18, 19, 21, 24, 25, 26, 27, 31, 32, 42, 44, 46, 48, 52, 53, 54, 56, 57, 58, 61, 62, 63, 64, 65, 66, 67, 68, 74, 78, 86, 87,
+             88, 91, 92, 93, 94, 95, 96, 101, 111, 112, 113, 137, 138, 148, 158, 154, 155, 156, 166, 167, 168, 174, 184, 194, 164, 134, 135, 135, 124, 136, 114]
+
     bricks = get_bricks(matrix, paths)
 
     draw_maze(coordinates_matrix, target_node, square_size)
@@ -390,60 +443,8 @@ if __name__ == "__main__":
     name = 'HALD'
     robot_pos = (0, 0)
 
-    loop = 0
-    for x in matrix:
-        print(x)
+    # for x in matrix:
+    #     print(x)
 
-    while True:
-        robot_pos = turtle_robot.pos()
-        print('robot_pos: ', robot_pos)
-        x = robot_pos[0]
-        y = robot_pos[1]
-        
-        current_node = get_node_position((x, y), coordinates_matrix)
-        closed_list.append(current_node)
-
-        if current_node == target_node:
-            print('Destination reached...')
-            break
-        
-        neighbour = get_neighbour(matrix, bricks, closed_list, current_node, target_node)
-
-        print('neighbours of : ', current_node)
-        for n in neighbour:
-            print(n)
-
-        print('current location: ', current_node)
-
-        low_f_score = get_lowest_f_score(neighbour).get('Node', None)
-        print('low_f_score: ', low_f_score)
-
-        get_pos = get_coordinates(low_f_score, coordinates_matrix)
-        turtle_robot.goto(get_pos[0], get_pos[1])
-
-        # turtle.done() # to keep turtle screen open, for dev only...
-
+    robot_pos = main_loop(turtle_robot)
     turtle.done()
-        # command = input(f'{name}: What must I do next? ').strip()
-
-        # if command == 'off':
-        #     screen.bye()
-        #     break
-
-        # if command == 'right':
-        #     turtle_robot.right(90)
-        #     direction = (direction % 4) + 1
-
-        # if command == 'left':
-        #     turtle_robot.left(90)
-        #     direction = (direction - 2) % 4 + 1
-
-        # if command.startswith('forward'):
-        #     args = command.split(' ')
-
-        #     if not (len(args) >= 2 and args[1].isdigit()):
-        #         print(f'{name}, Sorry, I did not understand {command}.')
-        #         continue
-
-        #     distance = int(args[1])
-        #     turtle_robot.forward(distance)
